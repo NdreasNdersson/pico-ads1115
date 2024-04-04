@@ -5,6 +5,7 @@
  */
 
 #include "ads1115.h"
+#include "pico/stdlib.h"
 
 void ads1115_init(i2c_inst_t *i2c_port, uint8_t i2c_addr,
                   ads1115_adc_t *adc) {
@@ -21,16 +22,19 @@ void ads1115_read_adc(uint16_t *adc_value, ads1115_adc_t *adc){
 
         // Wait until the conversion finishes before reading the value
         ads1115_read_config(adc);
-        while (adc->config & ADS1115_STATUS_MASK == ADS1115_STATUS_BUSY){
+        while (adc->config & (ADS1115_STATUS_MASK == ADS1115_STATUS_BUSY)){
             ads1115_read_config(adc);
         }
     }
 
+    // Allow conversion to complete, 1 / 128 = 0.0078125
+    // ADS1115_RATE_128_SPS is default
+    sleep_ms(10);
     // Now read the value from last conversion
     uint8_t dst[2];
     i2c_write_blocking(adc->i2c_port, adc->i2c_addr,
                        &ADS1115_POINTER_CONVERSION, 1, true);
-    i2c_read_blocking(adc->i2c_port, adc->i2c_addr, &dst, 2,
+    i2c_read_blocking(adc->i2c_port, adc->i2c_addr, dst, 2,
                       false);
     *adc_value = (dst[0] << 8) | dst[1];
 }
@@ -78,7 +82,7 @@ void ads1115_read_config(ads1115_adc_t *adc){
     uint8_t dst[2];
     i2c_write_blocking(adc->i2c_port, adc->i2c_addr,
                        &ADS1115_POINTER_CONFIGURATION, 1, true);
-    i2c_read_blocking(adc->i2c_port, adc->i2c_addr, &dst, 2,
+    i2c_read_blocking(adc->i2c_port, adc->i2c_addr, dst, 2,
                       false);
     adc->config = (dst[0] << 8) | dst[1];
 }
@@ -88,7 +92,7 @@ void ads1115_write_config(ads1115_adc_t *adc) {
     src[0] = ADS1115_POINTER_CONFIGURATION;
     src[1] = (uint8_t)(adc->config >> 8);
     src[2] = (uint8_t)(adc->config & 0xff);
-    i2c_write_blocking(adc->i2c_port, adc->i2c_addr, &src, 3,
+    i2c_write_blocking(adc->i2c_port, adc->i2c_addr, src, 3,
                        false);
 }
 
