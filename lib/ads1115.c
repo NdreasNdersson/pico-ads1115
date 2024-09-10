@@ -36,7 +36,7 @@ void ads1115_read_adc(uint16_t *adc_value, ads1115_adc_t *adc){
                        &ADS1115_POINTER_CONVERSION, 1, true);
     i2c_read_blocking(adc->i2c_port, adc->i2c_addr, dst, 2,
                       false);
-    *adc_value = ((uint16_t)dst[0] << 8) | (uint16_t)dst[1];
+    *adc_value = (uint16_t)(dst[0] << 8U) | dst[1];
 }
 
 float ads1115_raw_to_volts(uint16_t adc_value, ads1115_adc_t *adc) {
@@ -87,7 +87,7 @@ void ads1115_read_config(ads1115_adc_t *adc){
                        &ADS1115_POINTER_CONFIGURATION, 1, true);
     i2c_read_blocking(adc->i2c_port, adc->i2c_addr, dst, 2,
                       false);
-    adc->config = (dst[0] << 8) | dst[1];
+    adc->config = (uint16_t)(dst[0] << 8U) | dst[1];;
 }
 
 void ads1115_write_config(ads1115_adc_t *adc) {
