@@ -4,8 +4,8 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#ifndef _ADS1115_H_
-#define _ADS1115_H_
+#ifndef ADS1115_ADS1115_H_
+#define ADS1115_ADS1115_H_
 
 #include "pico.h"
 #include "hardware/i2c.h"
@@ -114,4 +114,4 @@ void ads1115_set_input_mux(enum ads1115_mux_t mux, ads1115_adc_t *adc);
 // void set_comparator_latching();
 // void set_comparator_queue();
 
-#endif
+#endif // ADS1115_ADS1115_H_

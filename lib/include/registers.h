@@ -3,9 +3,8 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  */
-
-#ifndef _REGISTERS_H_
-#define _REGISTERS_H_
+#ifndef ADS1115_REGISTERS_H_
+#define ADS1115_REGISTERS_H_
 
 /* i2c_write does not work if I pass the register address as a #define. It only works if the address is a const uint8_t and it is passed as a pointer (&)*/
 static const uint8_t ADS1115_POINTER_CONVERSION = 0x00;
@@ -96,4 +95,4 @@ enum ads1115_comp_que_t {
     ADS1115_COMPARATOR_QUE_DISABLE = 0x0003 // default
 };
 
-#endif
+#endif // ADS1115_REGISTERS_H_
