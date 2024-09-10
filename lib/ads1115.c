@@ -36,32 +36,35 @@ void ads1115_read_adc(uint16_t *adc_value, ads1115_adc_t *adc){
                        &ADS1115_POINTER_CONVERSION, 1, true);
     i2c_read_blocking(adc->i2c_port, adc->i2c_addr, dst, 2,
                       false);
-    *adc_value = (dst[0] << 8) | dst[1];
+    *adc_value = ((uint16_t)dst[0] << 8) | (uint16_t)dst[1];
 }
 
 float ads1115_raw_to_volts(uint16_t adc_value, ads1115_adc_t *adc) {
     // Determine the full-scale voltage range (FSR) based on the 
     // PGA set in the configuration.
-    float fsr;
+    float fsr = 0.0f;
     uint16_t pga = adc->config & ADS1115_PGA_MASK;
     switch (pga) {
         case ADS1115_PGA_6_144:
-            fsr = 6.144;
+            fsr = 6.144f;
             break;
         case ADS1115_PGA_4_096:
-            fsr = 4.096;
+            fsr = 4.096f;
             break;
         case ADS1115_PGA_2_048:
-            fsr = 2.048;
+            fsr = 2.048f;
             break;
         case ADS1115_PGA_1_024:
-            fsr = 1.024;
+            fsr = 1.024f;
             break;
         case ADS1115_PGA_0_512:
-            fsr = 0.512;
+            fsr = 0.512f;
             break;
         case ADS1115_PGA_0_256:
-            fsr = 0.256;
+            fsr = 0.256f;
+            break;
+        default:
+            fsr = 0.0f;
             break;
     }
 
