@@ -7,7 +7,7 @@
 #define ADS1115_REGISTERS_H_
 
 /* i2c_write does not work if I pass the register address as a #define. It only works if the address is a const uint8_t and it is passed as a pointer (&)*/
-#include <stdint.h>
+#include <cstdint>
 static const uint8_t ADS1115_POINTER_CONVERSION = 0x00;
 static const uint8_t ADS1115_POINTER_CONFIGURATION = 0x01;
 static const uint8_t ADS1115_POINTER_LO_THRESH = 0x02;
