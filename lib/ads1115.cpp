@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: BSD-3-Clause
  */
 
-#include "ads1115.h"
+#include "include/ads1115.h"
 #include "pico/stdlib.h"
 
 void ads1115_init(i2c_inst_t *i2c_port, uint8_t i2c_addr,

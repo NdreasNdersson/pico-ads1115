@@ -4,3 +4,5 @@
 *.swp
 html
 docs
+/bazel-*
+MODULE.bazel.lock
