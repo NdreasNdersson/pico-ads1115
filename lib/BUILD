@@ -6,4 +6,6 @@ cc_library(
         "@pico-sdk//src/rp2_common/hardware_i2c:hardware_i2c",
         "@pico-sdk//src/rp2_common/pico_stdlib:pico_stdlib",
     ],
+    visibility = ["//visibility:public"],
+    includes = ["include"],
 )
